@@ -1,0 +1,20 @@
+- name: dell | Install sof-firmware
+  community.general.zypper:
+    name: "sof-firmware"
+    state: present
+  become: true
+  when: ansible_product_name == 'Latitude 3420'
+  tags: dell
+
+- name: Update/create block if needed. Create file if not exists
+  blockinfile:
+    path: /etc/modprobe.d/00-intel-dsp.conf
+    block: |
+      # Force SOF as the DSP driver
+      options snd-intel-dspcfg dsp_driver=3
+      # Disable microphone to make HDMI work
+      options snd-hda-intel dmic_detect=0
+    create: true
+  become: true
+  when: ansible_product_name == 'Latitude 3420'
+  tags: dell

@@ -1,0 +1,38 @@
+base_packages:
+  - alacritty
+  - curl
+  - distrobox
+  - firewalld
+  - flatpak
+  - hack-fonts
+  - mtr
+  - neofetch
+  - podman
+  - systemd-zram-service
+  - tmux
+  - wget
+  - zsh
+
+base_flatpak_packages:
+  - com.calibre_ebook.calibre
+  - com.mattjakeman.ExtensionManager
+  - com.nextcloud.desktopclient.nextcloud
+  - com.spotify.Client
+  - com.system76.Popsicle
+  - com.valvesoftware.Steam
+  - com.valvesoftware.SteamLink
+  - com.visualstudio.code
+  - com.zettlr.Zettlr
+  - io.github.mpobaschnig.Vaults
+  - org.chromium.Chromium
+  - org.hedgewars.Hedgewars
+  - org.keepassxc.KeePassXC
+  - org.qbittorrent.qBittorrent
+  - org.telegram.desktop
+  - org.videolan.VLC
+
+
+
+timezone:
+  name: America/Argentina/Buenos_Aires
+  hwclock: local

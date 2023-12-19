@@ -1,0 +1,73 @@
+---
+- name: Make zypper to use GeoIP mirrors
+  ansible.builtin.lineinfile:
+    path: /etc/zypp/zypp.conf
+    regex: '^## download\.use_geoip_mirror = true'
+    line: "download.use_geoip_mirror = true"
+  become: true
+  tags: base
+
+
+
+- name: Install base applications
+  community.general.zypper:
+    name: "{{ base_packages }}"
+    state: present
+  register: base_packages_output
+  become: true
+  tags: base
+
+# https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+- name: Add zram optimization options to the kernel
+  ansible.builtin.blockinfile:
+    path: /etc/sysctl.d/99-vm-zram-parameters.conf
+    block: |
+      vm.swappiness = 180
+      vm.watermark_boost_factor = 0
+      vm.watermark_scale_factor = 125
+      vm.page-cluster = 0
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  tags: base
+
+- name: Enable zram
+  ansible.builtin.systemd:
+    name: "zramswap"
+    state: started
+    enabled: true
+  become: true
+  tags: base
+
+- name: Set timezone
+  ansible.builtin.timezone:
+    name: "{{ timezone.name }}"
+    hwclock: "{{ timezone.hwclock }}"
+  register: should_reboot
+  become: true
+  tags: base
+
+- name: Start and enable firewalld
+  ansible.builtin.systemd:
+    name: "firewalld"
+    state: started
+    enabled: true
+  become: true
+  tags: base
+
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+  become: false
+
+- name: Install flatpak pacakges current user
+  community.general.flatpak:
+    name: "{{ base_flatpak_packages }}"
+    state: present
+    method: user
+  become: false

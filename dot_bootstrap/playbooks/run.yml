@@ -1,0 +1,13 @@
+---
+- hosts: all
+  vars_files:
+    - ../vars/main.yml
+
+  tasks:
+    - name: Include base tasks
+      include_tasks: ../roles/base.yml
+      tags: ["base"]
+    
+    - name: Include audio tasks
+      include_tasks: ../roles/audio_fix_dell.yml
+      tags: ["dell"]

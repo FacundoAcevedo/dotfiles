@@ -7,8 +7,6 @@
   become: true
   tags: base
 
-
-
 - name: Install base applications
   community.general.zypper:
     name: "{{ base_packages }}"

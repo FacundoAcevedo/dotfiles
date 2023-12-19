@@ -11,3 +11,7 @@
     - name: Include audio tasks
       include_tasks: ../roles/audio_fix_dell.yml
       tags: ["dell"]
+
+    - name: Include virtualization tasks
+      include_tasks: ../roles/virtualization.yml
+      tags: ["virtualization"]

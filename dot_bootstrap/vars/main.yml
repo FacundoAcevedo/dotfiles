@@ -31,7 +31,9 @@ base_flatpak_packages:
   - org.telegram.desktop
   - org.videolan.VLC
 
-
+virtualization_packages:
+  - libvirt
+  - virt-manager
 
 timezone:
   name: America/Argentina/Buenos_Aires

@@ -15,6 +15,7 @@ base_packages:
 
 base_flatpak_packages:
   - com.calibre_ebook.calibre
+  - com.github.micahflee.torbrowser-launcher
   - com.mattjakeman.ExtensionManager
   - com.nextcloud.desktopclient.nextcloud
   - com.spotify.Client

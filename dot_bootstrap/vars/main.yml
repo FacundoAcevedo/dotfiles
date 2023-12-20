@@ -1,4 +1,5 @@
 base_remove_packages:
+  - vim
   - brltty
 
 base_packages:
@@ -11,6 +12,7 @@ base_packages:
   - htop
   - mtr
   - neofetch
+  - neovim
   - podman
   - systemd-zram-service
   - tig

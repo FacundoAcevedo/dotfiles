@@ -44,6 +44,9 @@ base_flatpak_packages:
 virtualization_packages:
   - libvirt
   - virt-manager
+  # VirtIo support
+  - qemu-hw-display-virtio-gpu
+  - qemu-hw-display-virtio-vga
 
 timezone:
   name: America/Argentina/Buenos_Aires

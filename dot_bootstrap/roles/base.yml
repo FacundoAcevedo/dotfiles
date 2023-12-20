@@ -11,7 +11,13 @@
   community.general.zypper:
     name: "{{ base_packages }}"
     state: present
-  register: base_packages_output
+  become: true
+  tags: base
+
+- name: Remove unnedded apps
+  community.general.zypper:
+    name: "{{ base_remove_packages }}"
+    state: absent
   become: true
   tags: base
 

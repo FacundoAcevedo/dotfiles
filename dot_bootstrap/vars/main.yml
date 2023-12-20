@@ -1,3 +1,6 @@
+base_remove_packages:
+  - brltty
+
 base_packages:
   - alacritty
   - curl
@@ -5,10 +8,12 @@ base_packages:
   - firewalld
   - flatpak
   - hack-fonts
+  - htop
   - mtr
   - neofetch
   - podman
   - systemd-zram-service
+  - tig
   - tmux
   - wget
   - zsh
@@ -16,6 +21,7 @@ base_packages:
 base_flatpak_packages:
   - com.calibre_ebook.calibre
   - com.github.micahflee.torbrowser-launcher
+  - com.github.tchx84.Flatseal
   - com.mattjakeman.ExtensionManager
   - com.nextcloud.desktopclient.nextcloud
   - com.spotify.Client

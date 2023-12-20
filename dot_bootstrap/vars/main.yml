@@ -1,6 +1,7 @@
 base_remove_packages:
-  - vim
   - brltty
+  - hw-probe
+  - vim
 
 base_packages:
   - alacritty

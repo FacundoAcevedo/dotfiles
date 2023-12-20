@@ -1,0 +1,14 @@
+[Unit]
+Description=Probe hardware and upload result to Linux hardware database (podman)
+ConditionVirtualization=false
+After=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/podman run --name hw-probe --rm -it -v /dev:/dev:ro -v /lib/modules:/lib/modules:ro -v /etc/os-release:/etc/os-release:ro -v /var/log:/var/log:ro --privileged --net=host --pid=host linuxhw/hw-probe -all -upload
+IOSchedulingClass=idle
+Nice=19
+IOSchedulingClass=2
+IOSchedulingPriority=7
+ProtectSystem=full
+StandardOutput=null

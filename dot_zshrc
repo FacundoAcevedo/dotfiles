@@ -123,7 +123,7 @@ fi
 # Copy and paste
 alias xcopy='xclip -sel clip'
 alias xpaste='xclip -o -sel clip'
-# 
+#
 alias vim='nvim'
 alias vissh='vim ~/.ssh/config'
 #source $(kustomize completion zsh)

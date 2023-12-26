@@ -1,0 +1,16 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: pretty-format-json
+    args:
+    - --autofix
+    exclude: "ignored/symlinked/.*"
+  - id: trailing-whitespace

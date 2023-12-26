@@ -6,6 +6,7 @@ base_remove_packages:
   - vim-data
 
 base_packages:
+  - "{{ distro_python_version }}-pre-commit"
   - alacritty
   - curl
   - distrobox
@@ -22,7 +23,6 @@ base_packages:
   - tmux
   - wget
   - zsh
-  # scap-workbench scap-security-guide
 
 base_flatpak_packages:
   - com.calibre_ebook.calibre
@@ -52,7 +52,7 @@ virtualization_packages:
   - qemu-hw-display-virtio-vga
   # Clipboard support (Display)
   - qemu-ui-spice-core
-  - qemu-chardev-spice # Add a
+  - qemu-chardev-spice
 
 timezone:
   name: America/Argentina/Buenos_Aires

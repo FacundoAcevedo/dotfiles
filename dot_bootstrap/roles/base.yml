@@ -96,14 +96,6 @@
     name: hw-probe.timer
   become: true
 
-#- name: Install hardened OpenSSH configuration
-#  ansible.builtin.get_url:
-#    url: https://raw.githubusercontent.com/k4yt3x/sshd_config/master/sshd_config
-#    dest: /etc/ssh/sshd_config.d/*.conf
-#    mode: 0600
-#    owner: root
-#    group: root
-#  become: true
 - name: Install hardened OpenSSH configuration
   ansible.builtin.copy:
     src: ../files/openssh/sshd_config
@@ -114,7 +106,7 @@
   become: true
 
 - name: Run ssh configuration test
-  ansible.builtin.command: sshd -T -f -q
+  ansible.builtin.command: sshd -T -q
   ignore_errors: yes
   register: ssh_test_result
   become: true

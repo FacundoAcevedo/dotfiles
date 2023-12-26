@@ -3,6 +3,10 @@
   vars_files:
     - ../vars/main.yml
 
+  pre_tasks:
+    - name: Generate text
+      set_fact:
+        distro_python_version: "python{{ ansible_python.version.major }}{{ ansible_python.version.minor }}"
   tasks:
     - name: Include base tasks
       include_tasks: base.yml

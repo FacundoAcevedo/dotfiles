@@ -1,7 +1,9 @@
 base_remove_packages:
   - brltty
   - hw-probe
+  - system-user-brltty
   - vim
+  - vim-data
 
 base_packages:
   - alacritty
@@ -20,6 +22,7 @@ base_packages:
   - tmux
   - wget
   - zsh
+  # scap-workbench scap-security-guide
 
 base_flatpak_packages:
   - com.calibre_ebook.calibre
@@ -44,9 +47,12 @@ base_flatpak_packages:
 virtualization_packages:
   - libvirt
   - virt-manager
-  # VirtIo support
+  # VirtIo support (Video)
   - qemu-hw-display-virtio-gpu
   - qemu-hw-display-virtio-vga
+  # Clipboard support (Display)
+  - qemu-ui-spice-core
+  - qemu-chardev-spice # Add a
 
 timezone:
   name: America/Argentina/Buenos_Aires

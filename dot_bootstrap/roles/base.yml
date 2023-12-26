@@ -2,21 +2,19 @@
 - name: Make zypper to use GeoIP mirrors
   ansible.builtin.lineinfile:
     path: /etc/zypp/zypp.conf
-    regex: '^## download\.use_geoip_mirror = true'
-    line: "download.use_geoip_mirror = true"
+    regex: ^## download\.use_geoip_mirror = true
+    line: download.use_geoip_mirror = true
   become: true
   tags: base
-
 - name: Install base applications
   community.general.zypper:
-    name: "{{ base_packages }}"
+    name: '{{ base_packages }}'
     state: present
   become: true
   tags: base
-
 - name: Remove unnedded apps
   community.general.zypper:
-    name: "{{ base_remove_packages }}"
+    name: '{{ base_remove_packages }}'
     state: absent
   become: true
   tags: base
@@ -30,37 +28,33 @@
       vm.watermark_boost_factor = 0
       vm.watermark_scale_factor = 125
       vm.page-cluster = 0
-    create: yes
+    create: true
     owner: root
     group: root
     mode: 0644
   become: true
   tags: base
-
 - name: Enable zram
   ansible.builtin.systemd:
-    name: "zramswap"
+    name: zramswap
     state: started
     enabled: true
   become: true
   tags: base
-
 - name: Set timezone
   ansible.builtin.timezone:
-    name: "{{ timezone.name }}"
-    hwclock: "{{ timezone.hwclock }}"
+    name: '{{ timezone.name }}'
+    hwclock: '{{ timezone.hwclock }}'
   register: should_reboot
   become: true
   tags: base
-
 - name: Start and enable firewalld
   ansible.builtin.systemd:
-    name: "firewalld"
+    name: firewalld
     state: started
     enabled: true
   become: true
   tags: base
-
 - name: Add the flathub flatpak repository remote to the user installation
   community.general.flatpak_remote:
     name: flathub
@@ -68,14 +62,12 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
     method: user
   become: false
-
 - name: Install flatpak pacakges current user
   community.general.flatpak:
-    name: "{{ base_flatpak_packages }}"
+    name: '{{ base_flatpak_packages }}'
     state: present
     method: user
   become: false
-
 - name: Install hw-probe service and timer
   ansible.builtin.copy:
     src: ../files/hw-probe/{{ item }}
@@ -83,11 +75,8 @@
     owner: root
     group: root
     mode: 0755
-  loop:
-    - hw-probe.service
-    - hw-probe.timer
+  loop: [hw-probe.service, hw-probe.timer]
   become: true
-
 - name: Enable hw-probe timer
   ansible.builtin.systemd_service:
     state: started
@@ -95,7 +84,6 @@
     daemon_reload: true
     name: hw-probe.timer
   become: true
-
 - name: Install hardened OpenSSH configuration
   ansible.builtin.copy:
     src: ../files/openssh/sshd_config
@@ -104,26 +92,21 @@
     group: root
     mode: 0600
   become: true
-
 - name: Run ssh configuration test
   ansible.builtin.command: sshd -T -q
-  ignore_errors: yes
+  ignore_errors: true
   register: ssh_test_result
   become: true
-
 - name: Check the result
   fail:
-    msg: "OpenSSH configuration test failed. Check the configuration file."
+    msg: OpenSSH configuration test failed. Check the configuration file.
   when: "'Bad configuration' in ssh_test_result.stderr"
-
 - name: Set neovim as alternative to vim/vi
   community.general.alternatives:
-    name: "{{ item }}"
+    name: '{{ item }}'
     path: /usr/bin/nvim
-    link: "/usr/bin/{{ item }}"
+    link: /usr/bin/{{ item }}
     state: selected
-  loop:
-    - vi
-    - vim
+  loop: [vi, vim]
   become: true
   tags: base

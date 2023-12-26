@@ -1,12 +1,12 @@
+---
 base_remove_packages:
   - brltty
   - hw-probe
   - system-user-brltty
   - vim
   - vim-data
-
 base_packages:
-  - "{{ distro_python_version }}-pre-commit"
+  - '{{ distro_python_version }}-pre-commit'
   - alacritty
   - curl
   - distrobox
@@ -23,7 +23,6 @@ base_packages:
   - tmux
   - wget
   - zsh
-
 base_flatpak_packages:
   - com.calibre_ebook.calibre
   - com.github.micahflee.torbrowser-launcher
@@ -43,7 +42,6 @@ base_flatpak_packages:
   - org.qbittorrent.qBittorrent
   - org.telegram.desktop
   - org.videolan.VLC
-
 virtualization_packages:
   - libvirt
   - virt-manager
@@ -53,7 +51,6 @@ virtualization_packages:
   # Clipboard support (Display)
   - qemu-ui-spice-core
   - qemu-chardev-spice
-
 timezone:
   name: America/Argentina/Buenos_Aires
   hwclock: local

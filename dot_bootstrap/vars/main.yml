@@ -12,6 +12,7 @@ base_packages:
   - distrobox
   - firewalld
   - flatpak
+  - gocryptfs
   - hack-fonts
   - htop
   - mtr

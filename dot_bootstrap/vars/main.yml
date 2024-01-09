@@ -6,8 +6,7 @@ base_remove_packages:
   - vim
   - vim-data
 base_packages:
-  - '{{ distro_python_version }}-pre-commit'
-  - alacritty
+  - aria2
   - curl
   - distrobox
   - firewalld
@@ -15,6 +14,7 @@ base_packages:
   - gocryptfs
   - hack-fonts
   - htop
+  - kitty
   - mtr
   - neofetch
   - neovim

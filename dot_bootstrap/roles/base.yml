@@ -1,19 +1,32 @@
 ---
+# Opensuse
 - name: Make zypper to use GeoIP mirrors
   ansible.builtin.lineinfile:
     path: /etc/zypp/zypp.conf
     regex: ^## download\.use_geoip_mirror = true
     line: download.use_geoip_mirror = true
   become: true
+  when: ansible_distribution == 'SLES'
+  tags: base
+
+# Fedora
+- name: Tune dnf.conf
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: '{{item}}'
+    insertafter: '[main]'
+  loop: [fastestmirror=True, max_parallel_downloads=10, deltarpm=true]
+  become: true
+  when: ansible_distribution == 'Fedora'
   tags: base
 - name: Install base applications
-  community.general.zypper:
+  community.general.package:
     name: '{{ base_packages }}'
     state: present
   become: true
   tags: base
 - name: Remove unnedded apps
-  community.general.zypper:
+  community.general.package:
     name: '{{ base_remove_packages }}'
     state: absent
   become: true
@@ -41,6 +54,7 @@
     enabled: true
   become: true
   tags: base
+  when: ansible_distribution != 'Fedora'
 - name: Set timezone
   ansible.builtin.timezone:
     name: '{{ timezone.name }}'

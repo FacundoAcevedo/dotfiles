@@ -1,6 +1,6 @@
 ---
 - name: Install virtualization packages
-  community.general.zypper:
+  community.general.package:
     name: '{{ virtualization_packages }}'
     state: present
   become: true

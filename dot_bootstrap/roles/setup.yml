@@ -10,9 +10,9 @@
     - name: Include base tasks
       include_tasks: base.yml
       tags: [base]
-    - name: Include audio tasks
-      include_tasks: audio_fix_dell.yml
-      tags: [dell]
+    # - name: Include audio tasks
+    #   include_tasks: audio_fix_dell.yml
+    #   tags: [dell]
     - name: Include virtualization tasks
       include_tasks: virtualization.yml
       tags: [virtualization]

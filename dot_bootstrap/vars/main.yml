@@ -28,17 +28,15 @@ base_flatpak_packages:
   - com.calibre_ebook.calibre
   - com.github.micahflee.torbrowser-launcher
   - com.github.tchx84.Flatseal
-  - com.mattjakeman.ExtensionManager
+  # - com.mattjakeman.ExtensionManager
   - com.nextcloud.desktopclient.nextcloud
   - com.spotify.Client
   - com.system76.Popsicle
   - com.valvesoftware.Steam
   - com.valvesoftware.SteamLink
   - com.visualstudio.code
-  - com.zettlr.Zettlr
   - io.github.mpobaschnig.Vaults
   - org.chromium.Chromium
-  - org.hedgewars.Hedgewars
   - org.keepassxc.KeePassXC
   - org.qbittorrent.qBittorrent
   - org.telegram.desktop

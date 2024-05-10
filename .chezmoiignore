@@ -1,3 +1,4 @@
+.bootstrap/ansible.log
 README.md
 .yamllint
 .pre-commit-config.yaml

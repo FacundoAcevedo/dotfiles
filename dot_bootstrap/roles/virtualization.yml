@@ -1,4 +1,16 @@
 ---
+- name: Append virtualization packages for opensuse
+  set_fact:
+    virtualization_packages: "{{ virtualization_base_packages + virtualization_opensuse_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'SLES'
+  tags: virtualization
+- name: Append virtualization packages for fedora
+  set_fact:
+    virtualization_packages: "{{ virtualization_base_packages + virtualization_fedora_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'Fedora'
+  tags: virtualization
 - name: Install virtualization packages
   ansible.builtin.package:
     name: "{{ virtualization_packages }}"

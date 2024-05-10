@@ -1,29 +1,35 @@
 ---
+# Distro packages
 base_remove_packages:
   - brltty
   - hw-probe
   - system-user-brltty
   - vim
   - vim-data
-base_packages:
+shared_packages:
   - aria2
   - curl
-  # - distrobox
-  - firewalld
   - flatpak
-  - gocryptfs
-  - hack-fonts
+  - git
   - htop
   - kitty
   - mtr
-  - neofetch
   - neovim
   - podman
-  - systemd-zram-service
   - tig
   - tmux
   - wget
   - zsh
+fedora_packages:
+  - fastfetch
+  - itop
+opensuse_packages:
+  - firewalld
+  - gocryptfs
+  - hack-fonts
+  - systemd-zram-service
+
+# Flatpak Packages
 base_flatpak_packages:
   - com.calibre_ebook.calibre
   - com.github.micahflee.torbrowser-launcher
@@ -41,15 +47,27 @@ base_flatpak_packages:
   - org.qbittorrent.qBittorrent
   - org.telegram.desktop
   - org.videolan.VLC
-virtualization_packages:
+
+# Virtualization Packages
+virtualization_base_packages:
   - libvirt
   - virt-manager
+virtualization_fedora_packages:
+  # VirtIo support (Video)
+  - qemu-device-display-virtio-gpu
+  - qemu-device-display-virtio-vga
+  # Clipboard support (Display)
+  - qemu-char-spice
+  - qemu-ui-spice-core
+virtualization_opensuse_packages:
   # VirtIo support (Video)
   - qemu-hw-display-virtio-gpu
   - qemu-hw-display-virtio-vga
   # Clipboard support (Display)
-  - qemu-ui-spice-core
   - qemu-chardev-spice
+  - qemu-ui-spice-core
+
+# Timezone
 timezone:
   name: America/Argentina/Buenos_Aires
   hwclock: local

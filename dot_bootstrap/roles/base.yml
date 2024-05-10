@@ -19,6 +19,21 @@
   become: true
   when: ansible_distribution == 'Fedora'
   tags: base
+
+- name: Merge base and opensuse packages
+  set_fact:
+    base_packages: "{{ shared_packages + opensuse_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'SLES'
+  tags: base
+
+- name: Merge base and fedora packages
+  set_fact:
+    base_packages: "{{ shared_packages + fedora_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'Fedora'
+  tags: base
+
 - name: Install base applications
   ansible.builtin.package:
     name: "{{ base_packages }}"

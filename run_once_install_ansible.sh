@@ -49,3 +49,7 @@ esac
 #ansible-playbook ~/.bootstrap/setup.yml --ask-become-pass
 
 echo "Ansible installation complete."
+
+# Run ansible
+
+bash ./run_onchange_bootstrap.sh.tmpl

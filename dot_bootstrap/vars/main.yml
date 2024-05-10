@@ -8,7 +8,7 @@ base_remove_packages:
 base_packages:
   - aria2
   - curl
-  - distrobox
+  # - distrobox
   - firewalld
   - flatpak
   - gocryptfs

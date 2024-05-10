@@ -20,13 +20,13 @@
   when: ansible_distribution == 'Fedora'
   tags: base
 - name: Install base applications
-  community.general.package:
+  ansible.builtin.package:
     name: "{{ base_packages }}"
     state: present
   become: true
   tags: base
 - name: Remove unnedded apps
-  community.general.package:
+  ansible.builtin.package:
     name: "{{ base_remove_packages }}"
     state: absent
   become: true

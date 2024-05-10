@@ -13,21 +13,21 @@
 - name: Tune dnf.conf
   ansible.builtin.lineinfile:
     path: /etc/dnf/dnf.conf
-    line: '{{item}}'
-    insertafter: '[main]'
+    line: "{{ item }}"
+    insertafter: "[main]"
   loop: [fastestmirror=True, max_parallel_downloads=10, deltarpm=true]
   become: true
   when: ansible_distribution == 'Fedora'
   tags: base
 - name: Install base applications
   community.general.package:
-    name: '{{ base_packages }}'
+    name: "{{ base_packages }}"
     state: present
   become: true
   tags: base
 - name: Remove unnedded apps
   community.general.package:
-    name: '{{ base_remove_packages }}'
+    name: "{{ base_remove_packages }}"
     state: absent
   become: true
   tags: base
@@ -44,7 +44,7 @@
     create: true
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   become: true
   tags: base
 - name: Enable zram
@@ -56,9 +56,9 @@
   tags: base
   when: ansible_distribution != 'Fedora'
 - name: Set timezone
-  ansible.builtin.timezone:
-    name: '{{ timezone.name }}'
-    hwclock: '{{ timezone.hwclock }}'
+  community.general.timezone:
+    name: "{{ timezone.name }}"
+    hwclock: "{{ timezone.hwclock }}"
   register: should_reboot
   become: true
   tags: base
@@ -78,17 +78,17 @@
   become: false
 - name: Install flatpak pacakges current user
   community.general.flatpak:
-    name: '{{ base_flatpak_packages }}'
+    name: "{{ base_flatpak_packages }}"
     state: present
     method: user
   become: false
 - name: Install hw-probe service and timer
   ansible.builtin.copy:
-    src: ../files/hw-probe/{{ item }}
+    src: files/hw-probe/{{ item }}
     dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   loop: [hw-probe.service, hw-probe.timer]
   become: true
 - name: Enable hw-probe timer
@@ -100,24 +100,25 @@
   become: true
 - name: Install hardened OpenSSH configuration
   ansible.builtin.copy:
-    src: ../files/openssh/sshd_config
+    src: files/openssh/sshd_config
     dest: /etc/ssh/sshd_config.d/*.conf
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   become: true
 - name: Run ssh configuration test
   ansible.builtin.command: sshd -T -q
   ignore_errors: true
   register: ssh_test_result
   become: true
+  changed_when: false
 - name: Check the result
-  fail:
+  ansible.builtin.fail:
     msg: OpenSSH configuration test failed. Check the configuration file.
   when: "'Bad configuration' in ssh_test_result.stderr"
 - name: Set neovim as alternative to vim/vi
   community.general.alternatives:
-    name: '{{ item }}'
+    name: "{{ item }}"
     path: /usr/bin/nvim
     link: /usr/bin/{{ item }}
     state: selected

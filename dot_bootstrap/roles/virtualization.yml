@@ -1,7 +1,7 @@
 ---
 - name: Install virtualization packages
   community.general.package:
-    name: '{{ virtualization_packages }}'
+    name: "{{ virtualization_packages }}"
     state: present
   become: true
   tags: virtualization
@@ -14,7 +14,7 @@
   tags: virtualization
 - name: Add user to libvirt group
   ansible.builtin.user:
-    name: '{{ ansible_user_id }}'
+    name: "{{ ansible_user_id }}"
     groups: [libvirt]
     append: true
   become: true

@@ -99,7 +99,7 @@
   become: false
 - name: Install hw-probe service and timer
   ansible.builtin.copy:
-    src: files/hw-probe/{{ item }}
+    src: hw-probe/{{ item }}
     dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
@@ -115,7 +115,7 @@
   become: true
 - name: Install hardened OpenSSH configuration
   ansible.builtin.copy:
-    src: files/openssh/sshd_config
+    src: openssh/sshd_config
     dest: /etc/ssh/sshd_config.d/*.conf
     owner: root
     group: root

@@ -10,6 +10,7 @@ shared_packages:
   - aria2
   - curl
   - flatpak
+  - fzf
   - git
   - htop
   - kitty
@@ -20,6 +21,8 @@ shared_packages:
   - tmux
   - wget
   - zsh
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
 fedora_packages:
   - fastfetch
   - itop

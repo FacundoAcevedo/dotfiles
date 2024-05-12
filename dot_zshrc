@@ -84,7 +84,7 @@ export SSH_AUTH_SOCK=/run/flatpak/ssh-auth
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting ssh-agent)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -130,11 +130,11 @@ alias xpaste='xclip -o -sel clip'
 alias vim='nvim'
 alias vissh='vim ~/.ssh/config'
 alias vizsh='vim ~/.zshrc'
+alias ts='tailscale status'
 #source $(kustomize completion zsh)
 
 #compdef _argocd argocd
 #source <(argocd completion zsh)
 
-alias ts='tailscale status'
 eval "$(fzf --zsh)"
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true

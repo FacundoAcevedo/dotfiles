@@ -24,8 +24,9 @@ shared_packages:
   - zsh-autosuggestions
   - zsh-syntax-highlighting
 fedora_packages:
-  - fastfetch
   - itop
+  - fastfetch
+  - pre-commit
 opensuse_packages:
   - firewalld
   - gocryptfs

@@ -1,0 +1,9 @@
+[Unit]
+Description=Run tpm-update twice a week
+
+[Timer]
+OnCalendar=Mon,Thu
+Persistent=true
+
+[Install]
+WantedBy=timers.target

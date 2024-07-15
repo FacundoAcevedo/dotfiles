@@ -1,0 +1,16 @@
+[Unit]
+Description=Update TMUX plugins with tpm
+After=network.target
+
+[Service]
+WorkingDirectory=%h
+ExecStart=bash -c "%h/.tmux/plugins/tpm/bin/update_plugins all"
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelModules=true
+ProtectKernelTunables=true
+
+[Install]
+WantedBy=default.target

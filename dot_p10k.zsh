@@ -66,6 +66,9 @@
     # virtualenv              # python virtual environment
     # context                 # user@host
     # time                    # current time
+    nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
+    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+    nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     # =========================[ Line #2 ]=========================
     newline                   # \n
   )

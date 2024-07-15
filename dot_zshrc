@@ -1,9 +1,12 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Ene Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# Set the PATH variable
+PATH=${KREW_ROOT:-$HOME/.krew}/bin:~/.local/bin:$PATH
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -17,19 +20,28 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+# Turbo loading
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+
 # Add in Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
+# zinit light zsh-users/zsh-completions
+# zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light joshskidmore/zsh-fzf-history-search
 
 
 # Add in snippets
-#zinit snippet OMZP::git
+zinit snippet OMZP::git
 #zinit snippet OMZP::sudo
 #zinit snippet OMZP::archlinux
 #zinit snippet OMZP::aws
@@ -50,6 +62,13 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
+## Fix some keys not working in my keyboard
+bindkey "^[[3~" delete-char
+bindkey "^[[4~" end-of-line
+bindkey "^[[1~" beginning-of-line
+
+
+
 
 # History
 HISTSIZE=5000
@@ -77,6 +96,9 @@ alias vim='nvim'
 alias vissh='vim ~/.ssh/config'
 alias vizsh='vim ~/.zshrc'
 alias ts='tailscale status'
+
+# Exports
+export EDITOR=vim
 
 # Shell integrations
 #eval "$(zoxide init --cmd cd zsh)"

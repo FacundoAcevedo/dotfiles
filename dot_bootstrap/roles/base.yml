@@ -89,11 +89,13 @@
     name: flathub
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
   become: false
 - name: Install flatpak pacakges current user
   community.general.flatpak:
     name: "{{ base_flatpak_packages }}"
     state: present
+    method: user
   become: false
 - name: Install hw-probe service and timer
   ansible.builtin.copy:

@@ -31,6 +31,9 @@ opensuse_packages:
   - gocryptfs
   - hack-fonts
   - systemd-zram-service
+debian_packages:
+  - firewalld
+  - gocryptfs
 
 # Flatpak Packages
 base_flatpak_packages:

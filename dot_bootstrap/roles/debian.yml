@@ -1,0 +1,43 @@
+---
+# Debian
+- name: Merge Base and Debian Packages
+  set_fact:
+    base_packages: "{{ shared_packages + debian_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'Debian'
+  tags: base
+- name: Install base applications
+  ansible.builtin.package:
+    name: "{{ base_packages }}"
+    state: present
+  become: true
+  tags: base
+- name: Remove unnedded apps
+  ansible.builtin.package:
+    name: "{{ base_remove_packages }}"
+    state: absent
+  become: true
+  tags: base
+
+- name: Start and enable firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enabled: true
+  become: true
+  tags: base
+
+- name: Install flatpak pacakges
+  community.general.flatpak:
+    name: "{{ base_flatpak_packages }}"
+    state: present
+  become: false
+- name: Set neovim as alternative to vim/vi
+  community.general.alternatives:
+    name: "{{ item }}"
+    path: /usr/bin/nvim
+    link: /usr/bin/{{ item }}
+    state: selected
+  loop: [vi, vim]
+  become: true
+  tags: base

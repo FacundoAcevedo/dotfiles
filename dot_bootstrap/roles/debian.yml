@@ -50,7 +50,6 @@
       - ca-certificates
       - apt-transport-https
     state: present
-    become: true
 
 - name: Create APT keyrings dir
   become: true
@@ -58,7 +57,6 @@
     path: '/etc/apt/keyrings'
     state: directory
     mode: 'u=rwx,go=rx'
-    become: true
 
 - name: Install key (apt)
   become: true
@@ -67,7 +65,6 @@
     dest: '/etc/apt/keyrings/'
     mode: 'u=rw,go=r'
     force: true
-    become: true
 
 - name: Install VS Code repo (apt)
   become: true
@@ -76,11 +73,9 @@
       deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main
     filename: vscode
     state: present
-    become: true
 
 - name: Install VS Code (apt)
   become: true
   ansible.builtin.apt:
     name: "code"
     state: present
-    become: true

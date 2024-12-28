@@ -35,7 +35,7 @@
 	format = ssh
 
 [init]
-	defaultBranch = develop
+	defaultBranch = main
 
 [log]
 	date = short

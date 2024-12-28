@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set the PATH variable
-PATH=${KREW_ROOT:-$HOME/.krew}/bin:~/.local/bin:$PATH
+PATH=${KREW_ROOT:-$HOME/.krew}/bin:~/.local/bin:$HOME/.cargo/bin:$PATH
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -38,7 +38,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 # zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light joshskidmore/zsh-fzf-history-search
-
+zinit light CJ-Systems/gitflow-cjs
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -99,6 +99,9 @@ alias ts='tailscale status'
 
 # Exports
 export EDITOR=vim
+
+# Rust env
+source $HOME/.cargo/env
 
 # Shell integrations
 #eval "$(zoxide init --cmd cd zsh)"

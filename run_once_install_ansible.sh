@@ -31,6 +31,8 @@ Linux*)
             install_on_fedora
         elif [[ ${DISTRO,,} == *"ubuntu"* ]]; then
             install_on_ubuntu
+        elif [[ ${DISTRO,,} == *"debian"* ]]; then
+            install_on_ubuntu
         fi
     else
         echo "Unsupported Linux distribution"

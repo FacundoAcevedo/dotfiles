@@ -5,23 +5,41 @@
   changed_when: false
   when: ansible_distribution == 'SLES'
   tags: virtualization
-- name: Append virtualization packages for fedora
+
+- name: Append virtualization packages for Fedora
   set_fact:
     virtualization_packages: "{{ virtualization_base_packages + virtualization_fedora_packages | unique }}"
   changed_when: false
   when: ansible_distribution == 'Fedora'
   tags: virtualization
+
+- name: Append virtualization packages for Debian
+  set_fact:
+    virtualization_packages: "{{ virtualization_base_packages + virtualization_debian_packages | unique }}"
+  changed_when: false
+  when: ansible_distribution == 'Debian'
+  tags: virtualization
+
 - name: Install virtualization packages
   ansible.builtin.package:
     name: "{{ virtualization_packages }}"
     state: present
   become: true
   tags: virtualization
-- name: Enable libvirtd
+- name: Enable libvirtd [SLES, Fedora]
   ansible.builtin.systemd:
     name: libvirtd
     state: started
     enabled: true
+  when: (ansible_distribution == 'Fedora') or (ansible_distribution == 'SLES')
+  become: true
+  tags: virtualization
+- name: Enable libvirtd [Debian]
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+  when: ansible_distribution == 'Debian'
   become: true
   tags: virtualization
 - name: Add user to libvirt group

@@ -56,9 +56,11 @@ base_flatpak_packages:
 
 # Virtualization Packages
 virtualization_base_packages:
-  - libvirt
   - virt-manager
+virtualization_debian_packages:
+  - libvirt-daemon-system
 virtualization_fedora_packages:
+  - libvirt
   # VirtIo support (Video)
   - qemu-device-display-virtio-gpu
   - qemu-device-display-virtio-vga
@@ -66,6 +68,7 @@ virtualization_fedora_packages:
   - qemu-char-spice
   - qemu-ui-spice-core
 virtualization_opensuse_packages:
+  - libvirt
   # VirtIo support (Video)
   - qemu-hw-display-virtio-gpu
   - qemu-hw-display-virtio-vga

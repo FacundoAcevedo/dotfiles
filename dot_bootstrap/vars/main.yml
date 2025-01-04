@@ -34,6 +34,8 @@ opensuse_packages:
 debian_packages:
   - firewalld
   - gocryptfs
+  - unattended-upgrades
+  - needrestart
 
 # Flatpak Packages
 base_flatpak_packages:
@@ -53,6 +55,8 @@ base_flatpak_packages:
   - org.qbittorrent.qBittorrent
   - org.telegram.desktop
   - org.videolan.VLC
+  - im.riot.Riot
+  - com.borgbase.Vorta
 
 # Virtualization Packages
 virtualization_base_packages:

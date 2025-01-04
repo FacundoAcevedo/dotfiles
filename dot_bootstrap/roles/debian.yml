@@ -27,6 +27,14 @@
   become: true
   tags: base
 
+- name: Start and enable unattended-upgrades
+  ansible.builtin.systemd:
+    name: unattended-upgrades
+    state: started
+    enabled: true
+  become: true
+  tags: base
+
 - name: Install flatpak pacakges
   community.general.flatpak:
     name: "{{ base_flatpak_packages }}"
@@ -61,6 +69,20 @@
     name: apparmor
     state: started
     enabled: true
+  become: true
+  tags: base
+
+- name: Disable unused services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+  loop:
+    - cups-browsed.service
+    - cups.service
+    - cups.socket
+    - avahi-daemon.service
+    - nmbd.service
   become: true
   tags: base
 

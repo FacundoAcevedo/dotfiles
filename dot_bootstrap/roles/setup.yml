@@ -15,7 +15,7 @@
     - name: Include base tasks for Fedora or Sles
       ansible.builtin.include_tasks: fedora_sles.yml
       when: (ansible_distribution == 'SLES') or
-            (ansible_distribution == 'Fedora')
+        (ansible_distribution == 'Fedora')
       tags: [base]
 
     # - name: Include audio tasks
@@ -25,3 +25,7 @@
     - name: Include virtualization tasks
       ansible.builtin.include_tasks: virtualization.yml
       tags: [virtualization]
+
+    - name: Include hwprobe task
+      ansible.builtin.include_tasks: podman_hwprobe.yml
+      tags: [hwprobe]

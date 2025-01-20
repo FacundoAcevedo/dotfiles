@@ -1,2 +1,3 @@
 dot_bootstrap/ansible.log
 dot_bootstrap/.vault_pass.txt
+.vscode/settings.json

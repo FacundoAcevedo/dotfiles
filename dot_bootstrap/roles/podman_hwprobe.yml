@@ -1,0 +1,17 @@
+---
+- name: Install hw-probe service and timer
+  ansible.builtin.copy:
+    src: hw-probe/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: "0755"
+  loop: [hw-probe.service, hw-probe.timer]
+  become: true
+- name: Enable hw-probe timer
+  ansible.builtin.systemd_service:
+    state: started
+    enabled: true
+    daemon_reload: true
+    name: hw-probe.timer
+  become: true

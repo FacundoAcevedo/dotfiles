@@ -6,6 +6,7 @@ base_remove_packages:
   - system-user-brltty
   - vim
   - vim-data
+  - synaptic
 shared_packages:
   - aria2
   - curl
@@ -36,6 +37,16 @@ debian_packages:
   - gocryptfs
   - unattended-upgrades
   - needrestart
+  # Signed firmware updates
+  - fwupd-signed
+
+  # for podman
+  - uidmap
+  - slirp4netns
+  - podman-compose
+  - podman-docker
+  - podman-toolbox
+  - catatonit
 
 # Flatpak Packages
 base_flatpak_packages:
@@ -57,6 +68,7 @@ base_flatpak_packages:
   - org.videolan.VLC
   - im.riot.Riot
   - com.borgbase.Vorta
+  - io.dbeaver.DBeaverCommunity
 
 # Virtualization Packages
 virtualization_base_packages:

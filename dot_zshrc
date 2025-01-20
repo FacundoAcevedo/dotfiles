@@ -92,6 +92,9 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
+alias ll="ls --color -l"
+alias l="ll"
+alias la="ls --color -l -a"
 alias vim='nvim'
 alias vissh='vim ~/.ssh/config'
 alias vizsh='vim ~/.zshrc'

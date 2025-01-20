@@ -6,9 +6,37 @@ After=local-fs.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/podman run --name hw-probe --rm -it -v /dev:/dev:ro -v /lib/modules:/lib/modules:ro -v /etc/os-release:/etc/os-release:ro -v /var/log:/var/log:ro --privileged --net=host --pid=host linuxhw/hw-probe:latest -all -upload
-IOSchedulingClass=idle
 Nice=19
-IOSchedulingClass=2
+IOSchedulingClass=idle
 IOSchedulingPriority=7
-ProtectSystem=full
 StandardOutput=null
+
+# Restrict writes to critical file systems
+ProtectSystem=full
+ProtectHome=yes
+
+# Isolate the service from certain paths
+ProtectKernelModules=yes # BREAK
+ProtectKernelLogs=yes
+ProtectKernelTunables=yes
+# ProtectControlGroups=yes #BREAK
+
+# Prevent privilege escalation
+NoNewPrivileges=yes
+
+# Disable ability to gain new file descriptors or set user IDs
+# CapabilityBoundingSet=CAP_NET_ADMIN CAP_SYS_ADMIN #BREAK
+
+# Restrict access to network and devices
+PrivateDevices=no
+PrivateTmp=yes
+
+# Lock memory to prevent sensitive information leakage
+MemoryDenyWriteExecute=yes
+
+# Restrict access to other users' processes
+ProtectProc=invisible
+
+ProtectClock=yes
+RestrictRealtime=yes
+UMask=0027

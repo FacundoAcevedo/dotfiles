@@ -35,6 +35,7 @@ opensuse_packages:
 debian_packages:
   - firewalld
   - gocryptfs
+  - nala
   - unattended-upgrades
   - needrestart
   # Signed firmware updates
@@ -59,9 +60,9 @@ base_flatpak_packages:
   - com.system76.Popsicle
   - com.valvesoftware.Steam
   - com.valvesoftware.SteamLink
-  - com.visualstudio.code
+  # - com.visualstudio.code
   - io.github.mpobaschnig.Vaults
-  - org.chromium.Chromium
+  # - org.chromium.Chromium
   - org.keepassxc.KeePassXC
   - org.qbittorrent.qBittorrent
   - org.telegram.desktop

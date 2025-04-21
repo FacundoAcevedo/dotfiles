@@ -37,9 +37,6 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions \
  blockf \
     zsh-users/zsh-completions
-#zinit light zdharma-continuum/fast-syntax-highlighting
-#zinit light zsh-users/zsh-autosuggestions
-#zinit light zsh-users/zsh-completions
 
 
 # disable sort when completing `git checkout`
@@ -84,17 +81,25 @@ bindkey "^[[4~" end-of-line
 bindkey "^[[1~" beginning-of-line
 
 ### History
+# Maximum number of history entries to keep in memory
 HISTSIZE=5000
+# File to save the command history
 HISTFILE=~/.zsh_history
+# Number of history entries to save to the history file
 SAVEHIST=$HISTSIZE
+# Remove older duplicate entries from the history
 HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+
+setopt appendhistory          # Append new history lines to the history file instead of overwriting it
+setopt sharehistory           # Share history across all zsh sessions
+setopt hist_save_no_dups      # Do not save duplicate commands in the history file
+setopt hist_ignore_space      # Ignore commands that start with a space
+setopt hist_ignore_all_dups   # Ignore all duplicate commands in the history
+setopt hist_ignore_dups       # Ignore duplicate commands in the current session's history
+setopt hist_find_no_dups      # Prevent duplicates when searching through history
+setopt hist_reduce_blanks     # Remove extra blanks from history
+setopt inc_append_history     # Save history incrementally
+setopt extended_history       # Save timestamps in history
 
 ### Aliases
 alias ls='ls --color'
@@ -116,7 +121,9 @@ dumpcert() { true | openssl s_client -connect "$1:443" -servername "$1" | openss
 source $HOME/.cargo/env
 
 # Shell integrations
-eval "$(zoxide init zsh)"
+if command -v zoxide > /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 ### Autoloads
 autoload -Uz edit-command-line

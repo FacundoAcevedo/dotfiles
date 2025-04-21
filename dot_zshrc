@@ -1,63 +1,79 @@
-# Ene Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
-
-# Set the PATH variable
 PATH=${KREW_ROOT:-$HOME/.krew}/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/go/bin:~/.local/bin:$HOME/.cargo/bin:$PATH
+
 
 # Set the directory we want to store zinit and plugins and install zinit if needed
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
 
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
+# Load zinit
+if [[ -e "${ZINIT_HOME}" ]]; then
+  source "${ZINIT_HOME}/zinit.zsh" \
+    && autoload -Uz _zinit \
+    && (( ${+_comps} )) \
+    && _comps[zinit]=_zinit
+else echo "unable to find 'zinit.zsh'" && return 1
+fi
 
-# Turbo loading
+### Exports
+export EDITOR=vim
+export TERMINAL=kitty
+
+### Add in zsh plugins
+
+## fzf-tab should be loaded before autosuggestions and fast-syntax-highlighting
+## but after compinit
+autoload -U compinit; compinit
+zinit light-mode for \
+    spaceship-prompt/spaceship-prompt \
+    Aloxaf/fzf-tab \
+    CJ-Systems/gitflow-cjs \
+    joshskidmore/zsh-fzf-history-search
+
 zinit wait lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
+    zdharma/fast-syntax-highlighting \
  atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-autosuggestions \
+ blockf \
+    zsh-users/zsh-completions
+#zinit light zdharma-continuum/fast-syntax-highlighting
+#zinit light zsh-users/zsh-autosuggestions
+#zinit light zsh-users/zsh-completions
 
-# spaceship-promt
-zinit light spaceship-prompt/spaceship-prompt
 
-# Add in Powerlevel10k
-#zinit ice depth=1; zinit light romkatv/powerlevel10k
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+# Enable tmux popup feature for fzf-tab
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+# Enable verbose mode for completion descriptions
+zstyle ':completion:*' verbose yes
+# List directories first in completion results
+zstyle ':completion:*' list-dirs-first true
+# Preview directory contents with `ls` when completing `cd` commands
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+# Preview directory contents with `ls` when using zoxide completions
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-# zinit light zsh-users/zsh-completions
-# zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-zinit light joshskidmore/zsh-fzf-history-search
-zinit light CJ-Systems/gitflow-cjs
 
-# Add in snippets
-zinit snippet OMZP::git
-#zinit snippet OMZP::sudo
-#zinit snippet OMZP::archlinux
-#zinit snippet OMZP::aws
-#zinit snippet OMZP::kubectl
-#zinit snippet OMZP::kubectx
-#zinit snippet OMZP::command-not-found
-
-# Load completions
-autoload -Uz compinit && compinit
-
-zinit cdreplay -q
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Keybindings
+### Keybindings
 bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
@@ -67,10 +83,7 @@ bindkey "^[[3~" delete-char
 bindkey "^[[4~" end-of-line
 bindkey "^[[1~" beginning-of-line
 
-
-
-
-# History
+### History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -83,14 +96,7 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-#zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# Aliases
+### Aliases
 alias ls='ls --color'
 alias ll="ls --color -l"
 alias l="ll"
@@ -101,19 +107,18 @@ alias vizsh='vim ~/.zshrc'
 alias ts='tailscale status'
 alias dquilt="quilt --quiltrc=${HOME}/.quiltrc-dpkg"
 
-
-# Oneliners
+### Oneliners
 getcert() { true | openssl s_client -connect "$1:443" -servername "$1" | openssl x509; }
 dumpcert() { true | openssl s_client -connect "$1:443" -servername "$1" | openssl x509 > "${1//[^a-Z0-9.-]}.cer"; }
 
-# Exports
-export EDITOR=vim
 
 # Rust env
 source $HOME/.cargo/env
 
 # Shell integrations
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 
-zstyle ':completion:*' menu select
-fpath+=~/.zfunc
+### Autoloads
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
